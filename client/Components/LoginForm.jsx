@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 
 function LoginForm({login, error}){
     const [details, setDetails] = useState({
-        name: '',
         username: '',
         password: ''
     });
 
     const submitHandler = e =>{
         e.preventDefault();
-
+        console.log('details in handler function', details)
         login(details);
     }
 

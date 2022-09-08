@@ -12,7 +12,7 @@ userController.addUser = async (req, res, next) => {
         `
         const params = [username, name, password];
         const result = await db.query(queryString, params);
-        return next()
+        return next();
     } 
     catch (err) {
       return next({
@@ -20,6 +20,30 @@ userController.addUser = async (req, res, next) => {
         message: { err: err },
         });
     }
+}
+
+userController.validateUser = async (req, res, next) => {
+    console.log('in validate user');
+    console.log('req body', req.body)
+
+    try {
+        const { username, password } = req.body;
+        const queryString = `
+        SELECT username, password FROM users 
+        WHERE username = '${username}'
+        AND password = '${password}';
+        `
+        const result = await db.query(queryString);
+        console.log('result in userController validate user', result);
+        return next();
+    }
+    catch (err) {
+        return next({
+            log: 'Error in userController.validateUser: ' + err,
+            message: { err: err },
+        });
+    }
+
 }
 
 module.exports = userController;
